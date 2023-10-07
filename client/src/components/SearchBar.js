@@ -37,7 +37,9 @@ function SearchBar() {
   const handleSearch = async (event) => {
     let key = event.target.value;
     if (key) {
-      let result = await fetch(`https://employee-status.onrender.com/${key}`);
+      let result = await fetch(
+        `https://employee-status.onrender.com/search/${key}`
+      );
       result = await result.json();
       if (result) {
         // console.log("searchEmployee", result);
