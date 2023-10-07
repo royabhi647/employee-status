@@ -1,4 +1,5 @@
 import React from "react";
+import SearchBar from "./SearchBar";
 import Topbar from "./Topbar";
 
 function Dashboard() {
@@ -8,12 +9,12 @@ function Dashboard() {
         width: "90%",
         height: "90%",
         background: "#F5F5F5",
-        // boxShadow: "0px 44px 84px 6px #D8D9DB",
         borderRadius: "30px",
       }}
     >
       <div style={{ margin: "15px" }}>
         <Topbar />
+        <SearchBar />
       </div>
     </div>
   );

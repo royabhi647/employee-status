@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CommonCard from "./CommonCard";
+import BirthdayCommonCard from "./BirthdayCommonCard";
+import NewJoinerCard from "./NewJoinerCard";
+import "./card.css";
 
 function Topbar() {
   const [allEmployee, setAllEmployee] = useState([]);
-  console.log("allEmployee", allEmployee);
+  // console.log("allEmployee", allEmployee);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,29 +23,43 @@ function Topbar() {
     };
     fetchData();
   }, []);
+
+  // Today Birthday employee
+  const today = new Date();
+
+  const todayBirthdayEmployees = allEmployee.filter((employee) => {
+    const dobParts = employee.DOB.split("-");
+    const birthday = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      parseInt(dobParts[0], 10)
+    );
+    return (
+      birthday.getMonth() === today.getMonth() &&
+      birthday.getDate() === today.getDate()
+    );
+  });
+
+  // new Joiner
+  const currentDate = new Date();
+  const nextTwoDays = new Date();
+  nextTwoDays.setDate(currentDate.getDate() + 2);
+
+  const newJoiners = allEmployee.filter((employee) => {
+    const joinDate = new Date(employee.joiningDate);
+    return joinDate >= currentDate && joinDate <= nextTwoDays;
+  });
+
   return (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div
-        style={{
-          width: "49%",
-          height: "20%",
-          background: "#FFF",
-          borderRadius: "8px",
-        }}
-      >
+    <div className="top-container">
+      <div className="birthday-card-container">
         <h4 style={{ marginLeft: "10px", marginTop: "8px" }}>Birthday</h4>
-        <CommonCard allEmployee={allEmployee} />
+
+        <BirthdayCommonCard todayBirthdayEmployees={todayBirthdayEmployees} />
       </div>
-      <div
-        style={{
-          width: "49%",
-          height: "20%",
-          background: "#FFF",
-          borderRadius: "8px",
-        }}
-      >
-        <h4 style={{ marginLeft: "10px", marginTop: "8px" }}>New Joinee</h4>
-        <CommonCard />
+      <div className="birthday-card-container">
+        <h4 style={{ marginLeft: "10px", marginTop: "8px" }}>New Joininee</h4>
+        <NewJoinerCard newJoiner={newJoiners} />
       </div>
     </div>
   );
