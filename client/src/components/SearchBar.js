@@ -105,6 +105,7 @@ function SearchBar() {
                 <td>
                   <img
                     src={employee.image}
+                    alt=""
                     style={{
                       width: "30px",
                       height: "30px",
