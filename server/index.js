@@ -21,6 +21,18 @@ app.get("/employees", async (req, res) => {
   }
 });
 
+app.get("/search/:key", async (req, res) => {
+  let result = await Employee.find({
+    $or: [
+      { Name: { $regex: req.params.key } },
+      { Dept: { $regex: req.params.key } },
+      { Email: { $regex: req.params.key } },
+      { Designation: { $regex: req.params.key } },
+    ],
+  });
+  res.send(result);
+});
+
 app.listen(5000, () => {
   console.log("Server is listening at port : 5000");
 });
