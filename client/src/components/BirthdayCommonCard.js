@@ -49,6 +49,7 @@ function BirthdayCommonCard(props) {
               >
                 <img
                   src={employee.image}
+                  alt=""
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                 />
               </div>
