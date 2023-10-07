@@ -18,7 +18,9 @@ function SearchBar() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await fetch("http://localhost:5000/employees");
+        const response = await fetch(
+          "https://employee-status.onrender.com/employees"
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -35,7 +37,7 @@ function SearchBar() {
   const handleSearch = async (event) => {
     let key = event.target.value;
     if (key) {
-      let result = await fetch(`http://localhost:5000/search/${key}`);
+      let result = await fetch(`https://employee-status.onrender.com/${key}`);
       result = await result.json();
       if (result) {
         // console.log("searchEmployee", result);
