@@ -42,15 +42,56 @@ function Topbar() {
     );
   });
 
+  console.log("todayBirthdayEmployees", todayBirthdayEmployees);
+
   // new Joiner
   const currentDate = new Date();
   const nextTwoDays = new Date();
   nextTwoDays.setDate(currentDate.getDate() + 2);
 
   const newJoiners = allEmployee.filter((employee) => {
-    const joinDate = new Date(employee.joiningDate);
-    return joinDate >= currentDate && joinDate <= nextTwoDays;
+    const joinDateParts = employee.joiningDate.split("-");
+    console.log("joinDateParts", joinDateParts);
+    const day = parseInt(joinDateParts[0]);
+    console.log("day", day);
+    const monthAbbreviation = joinDateParts[1];
+    console.log("month", monthAbbreviation);
+    const year = parseInt(joinDateParts[2], 10);
+    console.log("year", year);
+
+    const month = getMonthNumber(monthAbbreviation);
+
+    const joinDate = new Date(year, month, day);
+
+    return (
+      (joinDate.getDate() >= currentDate.getDate() &&
+        joinDate.getMonth() === currentDate.getMonth() &&
+        joinDate.getFullYear() === currentDate.getFullYear()) ||
+      (joinDate.getDate() <= nextTwoDays.getDate() &&
+        joinDate.getMonth() === nextTwoDays.getMonth() &&
+        joinDate.getFullYear() === currentDate.getFullYear())
+    );
   });
+
+  console.log("newJoiners", newJoiners);
+
+  function getMonthNumber(monthAbbreviation) {
+    const months = {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11,
+    };
+    return months[monthAbbreviation];
+  }
 
   return (
     <div className="top-container">
